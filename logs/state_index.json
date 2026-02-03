@@ -118,5 +118,13 @@
         "commit":  "51bc815e1ee2dce3bb172f21133cb87fe220ea8c",
         "branch":  "main",
         "timestamp":  "2026-02-03T22:49:29.6644289+10:00"
+    },
+    {
+        "name":  "offline-runtime-enable-layout-align-v1.2",
+        "slug":  "offline-runtime-enable-layout-align-v1-2",
+        "log":  "AI_STATE_offline-runtime-enable-layout-align-v1-2_2026-02-03_2251.log",
+        "commit":  "f28b9716567e13c04410f8615bdcd7f0a54558bd",
+        "branch":  "main",
+        "timestamp":  "2026-02-03T22:51:18.7286389+10:00"
     }
 ]
