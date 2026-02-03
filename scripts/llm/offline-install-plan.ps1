@@ -35,16 +35,14 @@ function Test-LLMOfflineLayout {
 
   $ggufs = @()
   if (Test-Path $l.ModelsDir) {
-    $ggufs = Get-ChildItem -Path $l.ModelsDir -Filter "*.gguf" -File -ErrorAction SilentlyContinue |
-      Sort-Object LastWriteTime -Descending |
-      Select-Object -ExpandProperty FullName
+    $ggufs = @(Get-ChildItem -Path $l.ModelsDir -Filter "*.gguf" -File -ErrorAction SilentlyContinue | Sort-Object LastWriteTime -Descending | Select-Object -ExpandProperty FullName)
   }
 
   [pscustomobject]@{
     ToolsDirExists   = (Test-Path $l.ToolsDir)
     ModelsDirExists  = $modelsOk
     ExeFound         = $foundExe
-    ModelCount       = $ggufs.Count
+    ModelCount       = @($ggufs).Count
     ModelNewest      = ($ggufs | Select-Object -First 1)
     Ok_Exe           = $exeOk
     Ok_ModelsDir     = $modelsOk
@@ -121,6 +119,7 @@ function Set-LLMModelPath {
   }
   return $path
 }
+
 
 
 
