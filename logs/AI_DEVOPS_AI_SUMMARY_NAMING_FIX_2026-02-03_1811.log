@@ -1,0 +1,7 @@
+﻿TASK: DEVOPS_AI_SUMMARY_NAMING_FIX
+OBJECTIVE: (Recovered) Header missing for selected summary; created automatically and stamped <= summary for correct pairing.
+CONSTRAINTS: PowerShell-only. Logs mirrored from C:\AI_Logs to repo\logs.
+WINDOWS: Windows 10 Home 2009 (Build 26200)
+POWERSHELL: 5.1.26100.7705
+GIT: git version 2.52.0.windows.1
+START: 2026-02-03T18:11:40.4576343+10:00
