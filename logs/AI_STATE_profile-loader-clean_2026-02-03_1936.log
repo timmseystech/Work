@@ -1,0 +1,11 @@
+﻿Name: profile-loader-clean
+Objective: Active PowerShell profile loads scripts/ai-functions.ps1 cleanly
+Notes: After replacing profile with minimal loader
+Timestamp: 2026-02-03T19:36:52.1870331+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 4c0759f5eaaab6db79ee4f15c96b654333c71810
+GitStatus: ## main...origin/main
