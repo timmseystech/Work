@@ -165,3 +165,8 @@ function New-AISaveState {
 . (Join-Path $PSScriptRoot 'llm\llm-terminal.ps1')
 # === /LLM Terminal Loader ===
 
+
+# === Offline Runtime Loader ===
+. (Join-Path $PSScriptRoot 'llm\offline-runtime.ps1')
+# === /Offline Runtime Loader ===
+
