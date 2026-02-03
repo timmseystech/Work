@@ -1,0 +1,11 @@
+﻿Name: offline-runtime-enable-layout-align-v1.1
+Objective: Fix invalid hashtable syntax in Get-LLMOfflineLayout; config now aligned to detected models drive
+Notes: Rewrote Get-LLMOfflineLayout to precompute modelsDir; ran Set-LLMOfflineDefaults to update config; no installs/downloads.
+Timestamp: 2026-02-03T22:49:29.6644289+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 51bc815e1ee2dce3bb172f21133cb87fe220ea8c
+GitStatus: ## main...origin/main
