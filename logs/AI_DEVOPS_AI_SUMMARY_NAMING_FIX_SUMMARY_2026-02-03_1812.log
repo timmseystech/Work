@@ -1,0 +1,7 @@
+﻿TASK: DEVOPS_AI_SUMMARY_NAMING_FIX (SUMMARY)
+ACTIONS: Patched summary log naming to include _SUMMARY_ in filename.
+CHANGES: Profile updated with canonical New-AISessionSummaryLog.
+RISKS: Low.
+ROLLBACK: Restore profile backup or remove appended block.
+NEXT: Run: End-AITask -Task 'DEVOPS_AI_TASK_LOG_SYNC_HELPER' to sync the helper task logs.
+END: 2026-02-03T18:12:40.4480575+10:00
