@@ -1,8 +1,18 @@
-﻿{
-    "name":  "save-state-system-fixed",
-    "slug":  "save-state-system-fixed",
-    "log":  "AI_STATE_save-state-system-fixed_2026-02-03_1720.log",
-    "commit":  "b0a0671c85dc5e942da7f8d6bde7e9e5eaa5341c",
-    "branch":  "main",
-    "timestamp":  "2026-02-03T17:20:10.6510809+10:00"
-}
+﻿[
+    {
+        "name":  "save-state-system-fixed",
+        "slug":  "save-state-system-fixed",
+        "log":  "AI_STATE_save-state-system-fixed_2026-02-03_1720.log",
+        "commit":  "b0a0671c85dc5e942da7f8d6bde7e9e5eaa5341c",
+        "branch":  "main",
+        "timestamp":  "2026-02-03T17:20:10.6510809+10:00"
+    },
+    {
+        "name":  "meaningful-label",
+        "slug":  "meaningful-label",
+        "log":  "AI_STATE_meaningful-label_2026-02-03_1726.log",
+        "commit":  "6e7118d89ac6c0d1bceb98ae3ee7cf8e6a6fca1b",
+        "branch":  "main",
+        "timestamp":  "2026-02-03T17:26:08.1290225+10:00"
+    }
+]

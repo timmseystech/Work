@@ -1,0 +1,11 @@
+﻿Name: meaningful-label
+Objective: what this state represents
+Notes: optional context
+Timestamp: 2026-02-03T17:24:28.0905362+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 6e7118d89ac6c0d1bceb98ae3ee7cf8e6a6fca1b
+GitStatus: ## main...origin/main
