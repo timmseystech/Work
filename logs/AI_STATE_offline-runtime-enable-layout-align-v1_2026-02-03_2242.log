@@ -1,0 +1,11 @@
+﻿Name: offline-runtime-enable-layout-align-v1
+Objective: Align offline layout + config defaults to actual models drive (D: preferred else C:)
+Notes: Updated offline layout to auto-select models drive and wrote config defaults via Set-LLMOfflineDefaults; no installs/downloads.
+Timestamp: 2026-02-03T22:42:04.6947730+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 7eeb081558593618e94db4e1078f5045af3600fc
+GitStatus: ## main...origin/main
