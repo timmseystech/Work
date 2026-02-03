@@ -1,0 +1,11 @@
+﻿Name: llm-terminal-stable-v1
+Objective: Invoke-LLMTerminal rewritten cleanly; strict-safe and deterministic
+Notes: Removed fragile injection logic; terminal now structurally stable.
+Timestamp: 2026-02-03T21:47:42.0010591+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 3418ee3d419eb68d37297c363c21876aa7728f5b
+GitStatus: ## main...origin/main
