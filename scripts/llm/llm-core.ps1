@@ -64,3 +64,72 @@ function Invoke-LLMChat {
     }
   }
 }
+
+function Set-OpenAIKey {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$ApiKey,
+    [ValidateSet('Process','User','Machine')][string]$Scope = 'Process'
+  )
+  $name = 'OPENAI_API_KEY'
+
+  if ($Scope -eq 'Process') {
+    $env:OPENAI_API_KEY = $ApiKey
+    return "Set $name for Process scope (current session)."
+  }
+
+  if ($Scope -eq 'User') {
+    [Environment]::SetEnvironmentVariable($name, $ApiKey, 'User')
+    return "Set $name for User scope."
+  }
+
+  if ($Scope -eq 'Machine') {
+    throw "Machine scope is system-impacting. Use User scope unless you explicitly require Machine."
+  }
+}
+
+function Test-LLMSetup {
+  [CmdletBinding()]
+  param(
+    [string]$Provider
+  )
+
+  $cfg = Get-LLMConfig
+  if (-not $Provider) { $Provider = $cfg.provider }
+
+  $resolved = Get-LLMProvider -Name $Provider
+
+  $result = [ordered]@{
+    Provider = $resolved
+    ConfigPath = (Join-Path (Split-Path (Split-Path $PSScriptRoot -Parent) -Parent) 'config\llm.json')
+    Ok = $true
+    Issues = @()
+  }
+
+  switch ($resolved) {
+    'openai' {
+      $envName = [string]$cfg.providers.openai.apiKeyEnv
+      $apiKey = [Environment]::GetEnvironmentVariable($envName, 'Process')
+      if (-not $apiKey) { $apiKey = [Environment]::GetEnvironmentVariable($envName, 'User') }
+      if (-not $apiKey) { $apiKey = [Environment]::GetEnvironmentVariable($envName, 'Machine') }
+      if (-not $apiKey) {
+        $result.Ok = $false
+        $result.Issues += "Missing env var: $envName"
+      }
+    }
+    'local-llamacpp' {
+      $exe   = [string]$cfg.providers.'local-llamacpp'.exePath
+      $model = [string]$cfg.providers.'local-llamacpp'.modelPath
+      if (-not (Test-Path $exe)) {
+        $result.Ok = $false
+        $result.Issues += "Missing llama.cpp exe: $exe"
+      }
+      if (-not (Test-Path $model)) {
+        $result.Ok = $false
+        $result.Issues += "Missing model file: $model"
+      }
+    }
+  }
+
+  [pscustomobject]$result
+}
