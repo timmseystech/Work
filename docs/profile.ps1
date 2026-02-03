@@ -695,3 +695,286 @@ START: $(Get-Date -Format o)
 
 
 
+
+# AI Task Log Sync Helper (CANONICAL: recovered header stamped <= summary)
+
+
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs',
+    [string]$CommitMessage
+  )
+
+  $ErrorActionPreference = 'Stop'
+  if (-not (Test-Path $RepoRoot)) { throw "Repo missing: $RepoRoot" }
+  if (-not (Test-Path $SrcLogs))  { throw "Source logs missing: $SrcLogs" }
+
+  $RepoLogs = Join-Path $RepoRoot 'logs'
+  New-Item -ItemType Directory -Force -Path $RepoLogs | Out-Null
+
+  # Pick newest SUMMARY first (authoritative end marker)
+  $summary = Get-ChildItem $SrcLogs -Filter "AI_${Task}_SUMMARY_*.log" -File |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+  if (-not $summary) { throw "Missing summary log for task '$Task' in $SrcLogs" }
+
+  # Pick closest HEADER at or before summary time
+  $headers = Get-ChildItem $SrcLogs -Filter "AI_${Task}_*.log" -File |
+    Where-Object { $_.Name -notmatch '_SUMMARY_' } |
+    Sort-Object LastWriteTime -Descending
+
+  $header = $headers | Where-Object { $_.LastWriteTime -le $summary.LastWriteTime } | Select-Object -First 1
+
+  # Recover if missing (stamp recovered header <= summary)
+  if (-not $header) {
+    $recoveryTime = $summary.LastWriteTime.AddMinutes(-1)
+    $ts = $recoveryTime.ToString('yyyy-MM-dd_HHmm')
+    $win = Get-ComputerInfo -Property WindowsProductName,WindowsVersion,OsBuildNumber
+    $newHeaderPath = Join-Path $SrcLogs ("AI_{0}_{1}.log" -f $Task, $ts)
+
+    @"
+TASK: $Task
+OBJECTIVE: (Recovered) Header missing for selected summary; created automatically and stamped <= summary for correct pairing.
+CONSTRAINTS: PowerShell-only. Logs mirrored from C:\AI_Logs to repo\logs.
+WINDOWS: $($win.WindowsProductName) $($win.WindowsVersion) (Build $($win.OsBuildNumber))
+POWERSHELL: $($PSVersionTable.PSVersion)
+GIT: $(git --version)
+START: $($recoveryTime.ToString('o'))
+"@ | Set-Content -Encoding utf8 $newHeaderPath
+
+    # Force its file timestamp to match recoveryTime for deterministic pairing
+    (Get-Item $newHeaderPath).LastWriteTime = $recoveryTime
+    $header = Get-Item $newHeaderPath
+  }
+
+  "Using HEADER:  $($header.Name)  ($($header.LastWriteTime))" | Out-Host
+  "Using SUMMARY: $($summary.Name) ($($summary.LastWriteTime))" | Out-Host
+
+  Copy-Item -Force $header.FullName  (Join-Path $RepoLogs $header.Name)
+  Copy-Item -Force $summary.FullName (Join-Path $RepoLogs $summary.Name)
+
+  if (-not $CommitMessage) { $CommitMessage = "chore: $Task logs" }
+
+  Push-Location $RepoRoot
+  try {
+    git add -f -- (Join-Path $RepoLogs $header.Name) (Join-Path $RepoLogs $summary.Name) | Out-Null
+    if (-not (git diff --cached --name-only)) {
+      "Nothing staged; $Task header+summary already synced." | Out-Host
+      return
+    }
+
+    git commit -m $CommitMessage | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git commit failed" }
+
+    git push | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git push failed" }
+
+    "Synced $Task header+summary logs to GitHub." | Out-Host
+  }
+  finally { Pop-Location }
+
+
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs'
+  )
+  Sync-AITaskLogsToGitHub -Task $Task -RepoRoot $RepoRoot -SrcLogs $SrcLogs
+
+
+
+
+# AI Task Log Sync Helper (CANONICAL: reuse header window + recovered header <= summary)
+
+
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs',
+    [string]$CommitMessage
+  )
+
+  $ErrorActionPreference = 'Stop'
+  if (-not (Test-Path $RepoRoot)) { throw "Repo missing: $RepoRoot" }
+  if (-not (Test-Path $SrcLogs))  { throw "Source logs missing: $SrcLogs" }
+
+  $RepoLogs = Join-Path $RepoRoot 'logs'
+  New-Item -ItemType Directory -Force -Path $RepoLogs | Out-Null
+
+  # 1) Pick newest SUMMARY first (authoritative end marker)
+  $summary = Get-ChildItem $SrcLogs -Filter "AI_${Task}_SUMMARY_*.log" -File |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+  if (-not $summary) { throw "Missing summary log for task '$Task' in $SrcLogs" }
+
+  # 2) Collect candidate headers (excluding SUMMARY)
+  $headers = Get-ChildItem $SrcLogs -Filter "AI_${Task}_*.log" -File |
+    Where-Object { $_.Name -notmatch '_SUMMARY_' } |
+    Sort-Object LastWriteTime -Descending
+
+  # 3) Best pairing: closest HEADER at or before summary time
+  $header = $headers |
+    Where-Object { $_.LastWriteTime -le $summary.LastWriteTime } |
+    Select-Object -First 1
+
+  # 4) If none, reuse a header within a small window before summary (prevents creating junk headers)
+  if (-not $header -and $headers) {
+    $windowStart = $summary.LastWriteTime.AddMinutes(-5)
+    $candidate = $headers |
+      Where-Object { $_.LastWriteTime -ge $windowStart -and $_.LastWriteTime -le $summary.LastWriteTime } |
+      Sort-Object LastWriteTime -Descending |
+      Select-Object -First 1
+
+    if ($candidate) { $header = $candidate }
+  }
+
+  # 5) Recover if still missing (stamp recovered header <= summary for correct pairing)
+  if (-not $header) {
+    $recoveryTime = $summary.LastWriteTime.AddMinutes(-1)
+    $ts = $recoveryTime.ToString('yyyy-MM-dd_HHmm')
+    $win = Get-ComputerInfo -Property WindowsProductName,WindowsVersion,OsBuildNumber
+    $newHeaderPath = Join-Path $SrcLogs ("AI_{0}_{1}.log" -f $Task, $ts)
+
+@"
+TASK: $Task
+OBJECTIVE: (Recovered) Header missing for selected summary; created automatically and stamped <= summary for correct pairing.
+CONSTRAINTS: PowerShell-only. Logs mirrored from C:\AI_Logs to repo\logs.
+WINDOWS: $($win.WindowsProductName) $($win.WindowsVersion) (Build $($win.OsBuildNumber))
+POWERSHELL: $($PSVersionTable.PSVersion)
+GIT: $(git --version)
+START: $($recoveryTime.ToString('o'))
+"@ | Set-Content -Encoding utf8 $newHeaderPath
+
+    # Force file timestamp to match recoveryTime for deterministic pairing
+    (Get-Item $newHeaderPath).LastWriteTime = $recoveryTime
+    $header = Get-Item $newHeaderPath
+  }
+
+  "Using HEADER:  $($header.Name)  ($($header.LastWriteTime))" | Out-Host
+  "Using SUMMARY: $($summary.Name) ($($summary.LastWriteTime))" | Out-Host
+
+  # Copy into repo logs
+  Copy-Item -Force $header.FullName  (Join-Path $RepoLogs $header.Name)
+  Copy-Item -Force $summary.FullName (Join-Path $RepoLogs $summary.Name)
+
+  if (-not $CommitMessage) { $CommitMessage = "chore: $Task logs" }
+
+  Push-Location $RepoRoot
+  try {
+    git add -f -- (Join-Path $RepoLogs $header.Name) (Join-Path $RepoLogs $summary.Name) | Out-Null
+
+    if (-not (git diff --cached --name-only)) {
+      "Nothing staged; $Task header+summary already synced." | Out-Host
+      return
+    }
+
+    git commit -m $CommitMessage | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git commit failed" }
+
+    git push | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git push failed" }
+
+    "Synced $Task header+summary logs to GitHub." | Out-Host
+  }
+  finally { Pop-Location }
+
+
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs'
+  )
+  Sync-AITaskLogsToGitHub -Task $Task -RepoRoot $RepoRoot -SrcLogs $SrcLogs
+
+
+
+
+# AI Task Log Sync Helper (STRICT CANONICAL)
+# - Picks newest SUMMARY first
+# - Pairs with closest HEADER <= summary
+# - NEVER creates recovered headers
+# - Copies logs from C:\AI_Logs -> repo\logs -> git add/commit/push
+function Sync-AITaskLogsToGitHub {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs',
+    [string]$CommitMessage
+  )
+
+  $ErrorActionPreference = 'Stop'
+  if (-not (Test-Path $RepoRoot)) { throw "Repo missing: $RepoRoot" }
+  if (-not (Test-Path $SrcLogs))  { throw "Source logs missing: $SrcLogs" }
+
+  $RepoLogs = Join-Path $RepoRoot 'logs'
+  New-Item -ItemType Directory -Force -Path $RepoLogs | Out-Null
+
+  # 1) Pick newest SUMMARY first
+  $summary = Get-ChildItem $SrcLogs -Filter "AI_${Task}_SUMMARY_*.log" -File |
+    Sort-Object LastWriteTime -Descending |
+    Select-Object -First 1
+  if (-not $summary) { throw "Missing summary log for task '$Task' in $SrcLogs" }
+
+  # 2) Candidate headers (exclude SUMMARY)
+  $headers = Get-ChildItem $SrcLogs -Filter "AI_${Task}_*.log" -File |
+    Where-Object { $_.Name -notmatch '_SUMMARY_' } |
+    Sort-Object LastWriteTime -Descending
+
+  if (-not $headers) {
+    throw "Missing header logs for task '$Task' in $SrcLogs (no non-SUMMARY matches found)."
+  }
+
+  # 3) Closest HEADER <= summary
+  $header = $headers |
+    Where-Object { $_.LastWriteTime -le $summary.LastWriteTime } |
+    Select-Object -First 1
+
+  if (-not $header) {
+    $hint = ($headers | Select-Object -First 1).Name
+    throw "No HEADER <= SUMMARY for task '$Task'. Newest header is after summary. Example header: $hint"
+  }
+
+  "Using HEADER:  $($header.Name)  ($($header.LastWriteTime))" | Out-Host
+  "Using SUMMARY: $($summary.Name) ($($summary.LastWriteTime))" | Out-Host
+
+  Copy-Item -Force $header.FullName  (Join-Path $RepoLogs $header.Name)
+  Copy-Item -Force $summary.FullName (Join-Path $RepoLogs $summary.Name)
+
+  if (-not $CommitMessage) { $CommitMessage = "chore: $Task logs" }
+
+  Push-Location $RepoRoot
+  try {
+    git add -f -- (Join-Path $RepoLogs $header.Name) (Join-Path $RepoLogs $summary.Name) | Out-Null
+
+    if (-not (git diff --cached --name-only)) {
+      "Nothing staged; $Task header+summary already synced." | Out-Host
+      return
+    }
+
+    git commit -m $CommitMessage | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git commit failed" }
+
+    git push | Out-Host
+    if ($LASTEXITCODE -ne 0) { throw "git push failed" }
+
+    "Synced $Task header+summary logs to GitHub." | Out-Host
+  }
+  finally { Pop-Location }
+}
+
+function End-AITask {
+  [CmdletBinding()]
+  param(
+    [Parameter(Mandatory)][string]$Task,
+    [string]$RepoRoot = (Join-Path $HOME 'src\work\Work'),
+    [string]$SrcLogs  = 'C:\AI_Logs'
+  )
+  Sync-AITaskLogsToGitHub -Task $Task -RepoRoot $RepoRoot -SrcLogs $SrcLogs
+}
+
