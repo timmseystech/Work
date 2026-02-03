@@ -1,0 +1,7 @@
+﻿TASK: DEVOPS_AI_SAVE_STATE_TAG_FIX
+OBJECTIVE: Fix ai-state tag creation (no editor), and harden New-AISaveState to fail loudly + tag with message.
+CONSTRAINTS: PowerShell-only. Git over SSH. Logs must be GitHub-synced.
+WINDOWS: Windows 10 Home 2009 (Build 26200)
+POWERSHELL: 5.1.26100.7705
+GIT: git version 2.52.0.windows.1
+START: 2026-02-03T17:23:08.0790542+10:00

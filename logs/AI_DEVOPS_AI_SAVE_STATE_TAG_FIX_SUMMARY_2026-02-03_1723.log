@@ -1,0 +1,7 @@
+﻿TASK: DEVOPS_AI_SAVE_STATE_TAG_FIX (SUMMARY)
+ACTIONS: Created missing ai-state tags using annotated tags with -m (no editor). Hardened New-AISaveState to self-heal index + check LASTEXITCODE + tag with message.
+CHANGES: Updated profile with hardened New-AISaveState. Tags pushed to origin.
+RISKS: Low. Tag operations only; profile grows via append-only.
+ROLLBACK: git tag -d ai-state/<slug>; git push --delete origin ai-state/<slug>. Remove appended profile block manually if desired.
+NEXT: If you want a clean profile, we can migrate helpers into a versioned scripts\ai-functions.ps1 and dot-source once.
+END: 2026-02-03T17:23:12.3492638+10:00
