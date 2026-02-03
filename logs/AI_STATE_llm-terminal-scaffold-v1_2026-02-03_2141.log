@@ -1,0 +1,11 @@
+﻿Name: llm-terminal-scaffold-v1
+Objective: Standalone LLM terminal scaffold added (config + providers + loader wiring)
+Notes: No model downloads; offline runtime placeholder (llama.cpp) + OpenAI adapter placeholder.
+Timestamp: 2026-02-03T21:41:00.1724296+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: b36befda9b3b8fb664a24051eee5015a0afdab50
+GitStatus: ## main...origin/main
