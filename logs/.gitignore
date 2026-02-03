@@ -1,0 +1,6 @@
+# Never commit private keys or secrets
+*.key
+*.pem
+id_*
+known_hosts*
+*.env
