@@ -1,0 +1,11 @@
+﻿Name: base-arch-bootstrap-v1
+Objective: Canonical profile loader + scripts loader verified; core tools stable
+Notes: Created from BASE_ARCH_BOOTSTRAP_V1 session; profile backed up at: C:\Users\TimmseysTech\Documents\WindowsPowerShell\profile.ps1.bak-20260203-210827
+Timestamp: 2026-02-03T21:08:31.7227304+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 4fa3bed1feb5eac720589670b9ba9b5f51142148
+GitStatus: ## main...origin/main

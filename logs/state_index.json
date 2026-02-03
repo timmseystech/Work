@@ -46,5 +46,13 @@
         "commit":  "56f0a26de3e6179da17292a895f67c23250bef03",
         "branch":  "main",
         "timestamp":  "2026-02-03T20:11:42.9611446+10:00"
+    },
+    {
+        "name":  "base-arch-bootstrap-v1",
+        "slug":  "base-arch-bootstrap-v1",
+        "log":  "AI_STATE_base-arch-bootstrap-v1_2026-02-03_2108.log",
+        "commit":  "4fa3bed1feb5eac720589670b9ba9b5f51142148",
+        "branch":  "main",
+        "timestamp":  "2026-02-03T21:08:31.7227304+10:00"
     }
 ]
