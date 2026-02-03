@@ -1,0 +1,30 @@
+﻿==== AI SESSION HEADER ====
+Task:        DEVOPS_ARCH_FREEZE_V1
+Objective:   Freeze current architecture as v1.0: document invariants, tag baseline, and create a pinned save state for restore.
+Constraints: PowerShell-only.
+No background agents.
+Git over SSH.
+All logs GitHub-synced via Work repo logs/.
+Windows: Windows 10 Home 2009 (Build 26200)
+PowerShell: 5.1.26100.7705
+Git: git version 2.52.0.windows.1
+
+Windows:     Windows 10 Home
+WinVersion:  2009
+OS Build:    26200
+PowerShell:  5.1.26100.7705
+Start:       02/03/2026 18:03:41
+
+ExecutionPolicy (all scopes):
+
+        Scope ExecutionPolicy
+        ----- ---------------
+      Process          Bypass
+  CurrentUser       Undefined
+ LocalMachine       Undefined
+   UserPolicy       Undefined
+MachinePolicy       Undefined
+
+
+
+==========================
