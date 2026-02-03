@@ -1,0 +1,11 @@
+﻿Name: offline-runtime-plan-llamacpp-v1
+Objective: Offline runtime plan scaffolded (llama.cpp): detection + config setter + docs; no installs/downloads
+Notes: Next task will cover manual acquisition/build steps and optional model inventory tooling.
+Timestamp: 2026-02-03T21:59:17.8397486+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 8b79516e234cd2b7b884f7473f5dda647014145d
+GitStatus: ## main...origin/main
