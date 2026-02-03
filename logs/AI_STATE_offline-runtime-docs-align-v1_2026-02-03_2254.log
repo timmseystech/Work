@@ -1,0 +1,11 @@
+﻿Name: offline-runtime-docs-align-v1
+Objective: Docs aligned with auto-selected ModelsDir (D: preferred else C:); tag + layout consistent
+Notes: Docs only; no installs/downloads; preserves offline-first terminal workflow.
+Timestamp: 2026-02-03T22:54:47.8521799+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: b847c7c4d407601321107b8376eac6dd92a98bcc
+GitStatus: ## main...origin/main
