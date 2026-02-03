@@ -1,0 +1,27 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_ARCH_FREEZE_V1_SUMMARY
+End:             02/03/2026 18:03:55
+
+Actions performed:
+Created docs/ARCHITECTURE.md and docs/INVARIANTS.md describing the v1.0 baseline.
+Committed docs and tagged arch/v1.0 (annotated tag).
+Created a pinned save state 'arch-v1.0-freeze' and pushed logs/index/tag.
+
+System changes made:
+Repo changes: docs/ARCHITECTURE.md, docs/INVARIANTS.md committed.
+Git tag: arch/v1.0 created (or already existed).
+Save state: arch-v1.0-freeze added (logs + index + ai-state tag).
+
+Risks introduced:
+Low. Documentation + tags only. Save-state adds logs/index entries.
+
+Rollback notes:
+Delete tag: git tag -d arch/v1.0; git push --delete origin arch/v1.0
+Revert docs commit: git revert <commit>
+Delete save-state tag: git tag -d ai-state/arch-v1.0-freeze; git push --delete origin ai-state/arch-v1.0-freeze
+Revert save-state commit: git revert <commit>
+
+Outstanding issues / next steps:
+(Recommended) Add ARCHITECTURE.md link to README.md.
+(Optional) Migrate profile functions into scripts/ai-functions.ps1 for cleanliness.
+============================
