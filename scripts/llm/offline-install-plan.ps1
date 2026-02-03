@@ -4,14 +4,16 @@ function Get-LLMOfflineLayout {
   [CmdletBinding()]
   param()
 
+  $modelsDir = if (Test-Path 'D:\') { 'D:\models\llm' } else { 'C:\models\llm' }
+
   [pscustomobject]@{
     ToolsDir      = 'C:\tools\llama.cpp'
     ExePreferred  = 'llama-cli.exe'
     ExeFallback   = 'main.exe'
-    ModelsDir     = (if (Test-Path 'D:\') { 'D:\models\llm' } else { 'C:\models\llm' })
+    ModelsDir     = $modelsDir
     ModelExt      = '.gguf'
     DefaultExe    = 'C:\tools\llama.cpp\llama-cli.exe'
-    DefaultModel  = 'D:\models\llm\model.gguf'
+    DefaultModel  = (Join-Path $modelsDir 'model.gguf')
   }
 }
 
@@ -119,5 +121,6 @@ function Set-LLMModelPath {
   }
   return $path
 }
+
 
 
