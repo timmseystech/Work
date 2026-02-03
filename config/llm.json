@@ -1,0 +1,19 @@
+﻿{
+  "provider": "local-llamacpp",
+  "providers": {
+    "openai": {
+      "apiKeyEnv": "OPENAI_API_KEY",
+      "baseUrl": "https://api.openai.com/v1",
+      "model": "gpt-4.1-mini"
+    },
+    "local-llamacpp": {
+      "exePath": "C:\\tools\\llama.cpp\\llama-cli.exe",
+      "modelPath": "D:\\models\\llm\\model.gguf",
+      "defaultArgs": ["-c","4096","-t","8"]
+    }
+  },
+  "ui": {
+    "historyDir": "C:\\AI_Logs\\chat_history",
+    "saveHistory": true
+  }
+}

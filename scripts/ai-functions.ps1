@@ -157,3 +157,11 @@ function New-AISaveState {
     Pop-Location
   }
 }
+
+# === LLM Terminal Loader ===
+. (Join-Path $PSScriptRoot 'llm\llm-core.ps1')
+. (Join-Path $PSScriptRoot 'llm\providers\openai.ps1')
+. (Join-Path $PSScriptRoot 'llm\providers\local-llamacpp.ps1')
+. (Join-Path $PSScriptRoot 'llm\llm-terminal.ps1')
+# === /LLM Terminal Loader ===
+
