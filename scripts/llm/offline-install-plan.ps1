@@ -81,7 +81,7 @@ function Select-LLMModel {
     Where-Object { $_.Name -ieq $NameOrPath } |
     Select-Object -First 1
 
-  if (-not $hit) { throw "Model not found by name in $ModelsDir: $NameOrPath" }
+  if (-not $hit) { throw "Model not found by name in ${ModelsDir}: $NameOrPath" }
   return $hit.FullName
 }
 
@@ -119,3 +119,4 @@ function Set-LLMModelPath {
   }
   return $path
 }
+
