@@ -1,0 +1,11 @@
+﻿Name: profile-fix-baseline
+Objective: Functions working; fix legacy profile loading without losing progress
+Notes: Before disabling legacy profile.ps1
+Timestamp: 2026-02-03T19:25:26.5745531+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: b7df9b8b146a8dbbc2c9fd238485aa37d17b957e
+GitStatus: ## main...origin/main
