@@ -1,0 +1,11 @@
+﻿Name: offline-runtime-install-plan-llamacpp-v1
+Objective: Manual llama.cpp install/placement plan + model inventory helpers added; still no installs/downloads
+Notes: Adds docs + offline-install-plan helpers; no system PATH changes; terminal remains offline-first.
+Timestamp: 2026-02-03T22:05:39.0069902+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: cb9b9651fde26d3e1721079b11bb0e3526074537
+GitStatus: ## main...origin/main

@@ -86,5 +86,13 @@
         "commit":  "8b79516e234cd2b7b884f7473f5dda647014145d",
         "branch":  "main",
         "timestamp":  "2026-02-03T21:59:17.8397486+10:00"
+    },
+    {
+        "name":  "offline-runtime-install-plan-llamacpp-v1",
+        "slug":  "offline-runtime-install-plan-llamacpp-v1",
+        "log":  "AI_STATE_offline-runtime-install-plan-llamacpp-v1_2026-02-03_2205.log",
+        "commit":  "cb9b9651fde26d3e1721079b11bb0e3526074537",
+        "branch":  "main",
+        "timestamp":  "2026-02-03T22:05:39.0069902+10:00"
     }
 ]
