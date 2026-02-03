@@ -82,3 +82,78 @@ function Sync-AITaskLogsToGitHub {
   }
   finally { Pop-Location }
 }
+function New-AISaveState {
+  param(
+    [Parameter(Mandatory)][string]$Name,
+    [Parameter(Mandatory)][string]$Objective,
+    [string]$Notes = ''
+  )
+
+  $ErrorActionPreference = 'Stop'
+
+  $RepoRoot = Join-Path $HOME 'src\work\Work'
+  $LogsRoot = Join-Path $RepoRoot 'logs'
+  $Index    = Join-Path $LogsRoot 'state_index.json'
+
+  if (-not (Test-Path $RepoRoot)) { throw "Repo missing: $RepoRoot" }
+  New-Item -ItemType Directory -Force -Path $LogsRoot | Out-Null
+
+  if (-not (Test-Path $Index)) {
+    '[]' | Set-Content -Encoding utf8 $Index
+  }
+
+  $ts   = Get-Date
+  $slug = ($Name -replace '[^a-zA-Z0-9\-]', '-') -replace '-+', '-'
+  $log  = Join-Path $LogsRoot ("AI_STATE_{0}_{1}.log" -f $slug, $ts.ToString('yyyy-MM-dd_HHmm'))
+
+  Push-Location $RepoRoot
+  try {
+    $branch = git branch --show-current
+    $commit = git rev-parse HEAD
+    $status = git status -sb
+
+    $state = [ordered]@{
+      Name       = $Name
+      Objective  = $Objective
+      Notes      = $Notes
+      Timestamp  = $ts.ToString('o')
+      User       = $env:USERNAME
+      Computer   = $env:COMPUTERNAME
+      Windows    = (Get-ComputerInfo WindowsProductName,WindowsVersion,OsBuildNumber)
+      PowerShell = $PSVersionTable.PSVersion.ToString()
+      GitBranch  = $branch
+      GitCommit  = $commit
+      GitStatus  = ($status -join "`n")
+    }
+
+    $state.GetEnumerator() | ForEach-Object { "$($_.Key): $($_.Value)" } |
+      Set-Content -Encoding utf8 $log
+
+    # ---- FORCE ARRAY ----
+    $raw = Get-Content $Index -Raw | ConvertFrom-Json
+    if ($null -eq $raw) { $indexData = @() }
+    elseif ($raw -is [System.Array]) { $indexData = $raw }
+    else { $indexData = @($raw) }
+
+    $indexData += [ordered]@{
+      name      = $Name
+      slug      = $slug
+      log       = (Split-Path $log -Leaf)
+      commit    = $commit
+      branch    = $branch
+      timestamp = $state.Timestamp
+    }
+
+    $indexData | ConvertTo-Json -Depth 6 | Set-Content -Encoding utf8 $Index
+
+    git add -f -- logs/state_index.json logs/AI_STATE_*.log | Out-Null
+    git commit -m "ai(state): $Name" | Out-Host
+    git tag -a "ai-state/$slug" -m "AI save state: $Name"
+    git push --follow-tags | Out-Host
+
+    "Save state '$Name' created, indexed, tagged, and pushed." | Out-Host
+  }
+  finally {
+    Pop-Location
+  }
+}
