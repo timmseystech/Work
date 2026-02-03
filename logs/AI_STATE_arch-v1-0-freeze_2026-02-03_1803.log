@@ -1,0 +1,11 @@
+﻿Name: arch-v1.0-freeze
+Objective: Architecture frozen and tagged arch/v1.0; docs committed
+Notes: Baseline for lock-in mode. Use Restore-AISaveState -Slug 'arch-v1.0-freeze' -CreateBranch to resume.
+Timestamp: 2026-02-03T18:03:47.2339482+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: c8e89de163bc7dcf78c1926a1391cd1d121055b1
+GitStatus: ## main...origin/main
