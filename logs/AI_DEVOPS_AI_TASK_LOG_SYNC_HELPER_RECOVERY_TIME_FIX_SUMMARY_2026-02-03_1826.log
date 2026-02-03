@@ -1,0 +1,7 @@
+﻿TASK: DEVOPS_AI_TASK_LOG_SYNC_HELPER_RECOVERY_TIME_FIX (SUMMARY)
+ACTIONS: Patched Sync-AITaskLogsToGitHub recovery to stamp recovered headers <= selected summary time for correct pairing.
+CHANGES: Profile updated with canonical recovery-time fix.
+RISKS: Low.
+ROLLBACK: Restore profile backup or remove appended helper block.
+NEXT: Re-run: End-AITask -Task 'DEVOPS_AI_SUMMARY_NAMING_FIX' and confirm HEADER time <= SUMMARY time.
+END: 2026-02-03T18:26:03.7317537+10:00
