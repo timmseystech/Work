@@ -16,7 +16,7 @@ Enable fully offline inference on this Windows machine using llama.cpp CLI + GGU
 - Fallback binary: `main.exe`
 
 ### Models
-- Models dir: `D:\models\llm\`
+- Models dir: `D:\models\llm (preferred) or C:\models\llm\`
 - Model format: `*.gguf`
 
 ## Configuration (repo-backed)
@@ -39,7 +39,7 @@ Use PowerShell helpers to set these (no manual JSON edits required):
 2) Place binary:
    - `C:\tools\llama.cpp\llama-cli.exe` (preferred) OR `C:\tools\llama.cpp\main.exe`
 3) Place models:
-   - Put one or more `*.gguf` in `D:\models\llm\`
+   - Put one or more `*.gguf` in `D:\models\llm (preferred) or C:\models\llm\`
 4) In PowerShell:
    - `. "$HOME\src\work\Work\scripts\ai-functions.ps1"`
    - `Set-LLMOfflineDefaults -WhatIf` then run without `-WhatIf`
@@ -50,3 +50,4 @@ Use PowerShell helpers to set these (no manual JSON edits required):
 ## Notes
 - This stays fully terminal-first.
 - No browser is needed once runtime + model are placed.
+
