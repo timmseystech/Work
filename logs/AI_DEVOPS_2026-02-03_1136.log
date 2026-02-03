@@ -1,0 +1,34 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS
+End:             02/03/2026 11:36:30
+
+Actions performed:
+Installed PowerShell 7.5.4 and fixed PATH resolution so pwsh is callable.
+Installed Git 2.52.0.
+Verified Windows Terminal is installed; updated settings.json to include PS7 profile (schema-safe).
+
+System changes made:
+User PATH prepended with: C:\Program Files\PowerShell\7
+Windows Terminal settings.json backed up and updated (user scope).
+Git global config set (user scope).
+
+Risks introduced:
+Terminal settings.json edits (user scope) can break Terminal if corrupted; backups exist in C:\AI_Scripts\_tmp\.
+PATH order changes can affect which executables resolve first.
+
+Rollback notes:
+Restore a backup:
+Copy-Item 'C:\AI_Scripts\_tmp\settings.json.bak_20260203_113515' 'C:\Users\TimmseysTech\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json' -Force
+(or use the newest settings.json.bak_fix_*)
+Remove pwsh dir from User PATH if undesired.
+Uninstall packages:
+winget uninstall Microsoft.PowerShell
+winget uninstall Git.Git
+winget uninstall Microsoft.WindowsTerminal
+
+Outstanding issues / next steps:
+Next options:
+- DEVOPS_SSH: OpenSSH keys + GitHub setup
+- DEVOPS_WSL: enable WSL2 + Ubuntu
+- DEVOPS_DOCKER: Docker Desktop (reboot likely)
+============================

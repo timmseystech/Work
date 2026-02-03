@@ -1,0 +1,23 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            CONTROL
+End:             02/03/2026 11:14:00
+
+Actions performed:
+Created session wrapper: C:\AI_Scripts\AI.Run.ps1
+Started CONTROL session with enforced elevation + Process-scope ExecutionPolicy Bypass
+Captured transcript to paired transcript file
+
+System changes made:
+Created files under C:\AI_Scripts and C:\AI_Logs only
+No registry/services/scheduled tasks changed
+
+Risks introduced:
+Transcripts can capture sensitive command/output; treat C:\AI_Logs as sensitive.
+
+Rollback notes:
+Delete wrapper: Remove-Item C:\AI_Scripts\AI.Run.ps1 -Force
+Delete logs/transcripts: Remove-Item C:\AI_Logs\AI_CONTROL_* -Force
+
+Outstanding issues / next steps:
+Next task: TOOLKIT - create reusable helper scripts (safe copy, hash verify, diff, quick health checks) + standard task scaffolding.
+============================

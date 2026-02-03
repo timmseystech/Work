@@ -1,0 +1,41 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_WORKFLOWS
+End:             02/03/2026 14:21:18
+
+Actions performed:
+Created workflow kit under C:\AI_Tools\Git\workflows\repo-template (GIT_WORKFLOW.md, CONTRIBUTING.md, PR + issue templates, RELEASE.md).
+Added global workflow helper aliases (who, root, up, newb, tagv, tags, rlog).
+Created PowerShell workflow scripts under C:\AI_Tools\Git\bin (git-start-branch.ps1, git-bclean.ps1, git-release-tag.ps1).
+Validated scripts in a disposable repo (branch create, merge, tag, branch cleanup preview).
+
+System changes made:
+New files created:
+- C:\AI_Tools\Git\workflows\repo-template\...
+- C:\AI_Tools\Git\bin\*.ps1
+Global Git config updated with new aliases.
+
+Risks introduced:
+Aliases change command ergonomics (low risk).
+If you run git-bclean.ps1 without -WhatIf in a real repo, it deletes merged local branches (recoverable via reflog if needed).
+
+Rollback notes:
+Remove workflow kit:
+Remove-Item -Recurse -Force C:\AI_Tools\Git\workflows
+
+Remove scripts:
+Remove-Item -Recurse -Force C:\AI_Tools\Git\bin
+
+Unset aliases:
+git config --global --unset-all alias.who
+git config --global --unset-all alias.root
+git config --global --unset-all alias.up
+git config --global --unset-all alias.newb
+git config --global --unset-all alias.tagv
+git config --global --unset-all alias.tags
+git config --global --unset-all alias.rlog
+
+Outstanding issues / next steps:
+Copy C:\AI_Tools\Git\workflows\repo-template contents into any repo to standardize PR/issues/release docs.
+Optional: add C:\AI_Tools\Git\bin to PATH for easy script execution.
+Optional next task: DEVOPS_GIT_SSH_MULTIKEY.
+============================

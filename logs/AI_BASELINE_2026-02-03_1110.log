@@ -1,0 +1,209 @@
+﻿==== AI BASELINE SNAPSHOT ====
+Timestamp: 3/02/2026 11:10:45 AM
+Computer:  DESKTOP-PRKLOHC
+User:      DESKTOP-PRKLOHC\TimmseysTech
+PS:        5.1.26100.7705
+
+===== OS / BUILD =====
+
+
+
+WindowsProductName      : Windows 10 Home
+WindowsVersion          : 2009
+OsName                  : Microsoft Windows 11 Home
+OsVersion               : 10.0.26200
+OsBuildNumber           : 26200
+WindowsInstallationType : Client
+
+
+
+
+
+===== COMPUTERINFO (KEY) =====
+
+
+
+CsName                : DESKTOP-PRKLOHC
+CsManufacturer        : ASUSTeK COMPUTER INC.
+CsModel               : ASUS TUF Gaming A15 FA506II_FX506II
+CsSystemType          : x64-based PC
+CsTotalPhysicalMemory : 16558329856
+BiosVersion           : _ASUS_ - 1072009
+BiosReleaseDate       : 12/03/2021 10:00:00 AM
+
+
+
+
+
+===== UPTIME =====
+
+
+LastBootUpTime        LocalDateTime        
+--------------        -------------        
+31/01/2026 4:02:11 AM 3/02/2026 11:10:52 AM
+
+
+
+
+===== HOTFIXES (LAST 25) =====
+
+
+Source        Description      HotFixID      InstalledBy          InstalledOn               
+------        -----------      --------      -----------          -----------               
+DESKTOP-PR... Update           KB5074105     NT AUTHORITY\SYSTEM  30/01/2026 12:00:00 AM    
+DESKTOP-PR... Update           KB5074104     NT AUTHORITY\SYSTEM  30/01/2026 12:00:00 AM    
+DESKTOP-PR... Update           KB5074828     NT AUTHORITY\SYSTEM  30/01/2026 12:00:00 AM    
+DESKTOP-PR... Update           KB5071142     NT AUTHORITY\SYSTEM  2/12/2025 12:00:00 AM     
+DESKTOP-PR... Update           KB5054156     NT AUTHORITY\SYSTEM  17/10/2025 12:00:00 AM    
+
+
+
+
+===== DISKS / VOLUMES =====
+
+
+
+DriveLetter     : 
+FileSystemLabel : 
+FileSystem      : FAT32
+HealthStatus    : Healthy
+SizeRemaining   : 65267712
+Size            : 100663296
+
+DriveLetter     : 
+FileSystemLabel : 
+FileSystem      : NTFS
+HealthStatus    : Healthy
+SizeRemaining   : 116346880
+Size            : 869265408
+
+DriveLetter     : C
+FileSystemLabel : 
+FileSystem      : NTFS
+HealthStatus    : Healthy
+SizeRemaining   : 185030152192
+Size            : 511115071488
+
+
+
+
+
+===== NETWORK ADAPTERS (UP) =====
+
+
+Name  InterfaceDescription                           MacAddress        LinkSpeed
+----  --------------------                           ----------        ---------
+Wi-Fi Realtek 8822CE Wireless LAN 802.11ac PCI-E NIC 94-08-53-59-A1-FB 72.2 Mbps
+
+
+
+
+===== IP CONFIG =====
+
+
+
+InterfaceAlias : Wi-Fi
+IPv4Address    : {192.168.20.12}
+IPv6Address    : {2403:580a:fd0c:0:a683:a11b:6987:c8a}
+DNSServer      : {MSFT_DNSClientServerAddress (Name = "4", CreationClassName = "", SystemCreationClassName = "", SystemName = "23"), MSFT_DNSClientServerAddress (Name = "4", CreationClassName = "", SystemCreationClassName = "", SystemName 
+                 = "2")}
+NetProfile     : MSFT_NetConnectionProfile (InstanceID = "{12874034-A886-497D-8C0F-CF5E55A1510C}")
+
+InterfaceAlias : Ethernet
+IPv4Address    : {169.254.206.25}
+IPv6Address    : {}
+DNSServer      : {MSFT_DNSClientServerAddress (Name = "15", CreationClassName = "", SystemCreationClassName = "", SystemName = "23"), MSFT_DNSClientServerAddress (Name = "15", CreationClassName = "", SystemCreationClassName = "", 
+                 SystemName = "2")}
+NetProfile     : 
+
+
+
+
+
+===== FIREWALL PROFILES =====
+
+
+Name    Enabled DefaultInboundAction DefaultOutboundAction
+----    ------- -------------------- ---------------------
+Domain     True        NotConfigured         NotConfigured
+Private    True        NotConfigured         NotConfigured
+Public     True        NotConfigured         NotConfigured
+
+
+
+
+===== DEFENDER STATUS =====
+
+
+
+AMEngineVersion                  : 1.1.25110.1
+AMProductVersion                 : 4.18.25110.6
+AMRunningMode                    : Normal
+AMServiceEnabled                 : True
+AMServiceVersion                 : 4.18.25110.6
+AntispywareEnabled               : True
+AntispywareSignatureAge          : 0
+AntispywareSignatureLastUpdated  : 2/02/2026 11:28:58 PM
+AntispywareSignatureVersion      : 1.443.980.0
+AntivirusEnabled                 : True
+AntivirusSignatureAge            : 0
+AntivirusSignatureLastUpdated    : 2/02/2026 11:28:58 PM
+AntivirusSignatureVersion        : 1.443.980.0
+BehaviorMonitorEnabled           : True
+ComputerID                       : F5FF07FE-CD93-4F4D-ACAD-1F5434F9C97E
+ComputerState                    : 0
+DefenderSignaturesOutOfDate      : False
+DeviceControlDefaultEnforcement  : 
+DeviceControlPoliciesLastUpdated : 1/01/1601 10:00:00 AM
+DeviceControlState               : Disabled
+FullScanAge                      : 4294967295
+FullScanEndTime                  : 
+FullScanOverdue                  : False
+FullScanRequired                 : False
+FullScanSignatureVersion         : 
+FullScanStartTime                : 
+InitializationProgress           : ServiceStartedSuccessfully
+IoavProtectionEnabled            : True
+IsTamperProtected                : False
+IsVirtualMachine                 : False
+LastFullScanSource               : 0
+LastQuickScanSource              : 2
+NISEnabled                       : True
+NISEngineVersion                 : 1.1.25110.1
+NISSignatureAge                  : 0
+NISSignatureLastUpdated          : 2/02/2026 11:28:58 PM
+NISSignatureVersion              : 1.443.980.0
+OnAccessProtectionEnabled        : True
+ProductStatus                    : 524288
+QuickScanAge                     : 0
+QuickScanEndTime                 : 2/02/2026 11:24:04 PM
+QuickScanOverdue                 : False
+QuickScanSignatureVersion        : 1.443.965.0
+QuickScanStartTime               : 2/02/2026 11:20:33 PM
+RealTimeProtectionEnabled        : True
+RealTimeScanDirection            : 0
+RebootRequired                   : False
+SmartAppControlExpiration        : 
+SmartAppControlState             : Off
+TamperProtectionSource           : UI
+TDTCapable                       : N/A
+TDTMode                          : N/A
+TDTSiloType                      : N/A
+TDTStatus                        : N/A
+TDTTelemetry                     : N/A
+TroubleShootingDailyMaxQuota     : 
+TroubleShootingDailyQuotaLeft    : 
+TroubleShootingEndTime           : 
+TroubleShootingExpirationLeft    : 
+TroubleShootingMode              : 
+TroubleShootingModeSource        : 
+TroubleShootingQuotaResetTime    : 
+TroubleShootingStartTime         : 
+PSComputerName                   : 
+
+
+
+
+
+===== INSTALLED APPS (TOP 80) =====
+

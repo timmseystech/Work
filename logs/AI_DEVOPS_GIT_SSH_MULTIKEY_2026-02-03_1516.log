@@ -1,0 +1,37 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_SSH_MULTIKEY
+End:             02/03/2026 15:16:29
+
+Actions performed:
+Created/validated deterministic multi-key SSH config at: C:\AI_Tools\SSH\config
+Generated missing ed25519 keys (personal/work) under: C:\Users\TimmseysTech\.ssh
+Enabled ssh-agent and added keys
+Forced Git to use alt config via core.sshCommand
+Added Git URL rewrite for github.com -> github-personal alias
+Validated ssh -G resolution and best-effort auth
+Backed up prior alt config to: C:\AI_Tools\SSH\config.bak-20260203-151617
+
+System changes made:
+Wrote: C:\AI_Tools\SSH\config
+Created keys (if missing): id_ed25519_github_personal(.pub), id_ed25519_github_work(.pub)
+Updated global Git config: core.sshCommand and url.*.insteadOf
+
+Risks introduced:
+Git now uses a non-default SSH config path (intentional). If alt config removed, Git SSH will fail until reverted.
+URL rewrite forces github.com HTTPS clones to SSH via chosen alias (changeable).
+
+Rollback notes:
+Revert Git SSH override:
+  git config --global --unset-all core.sshCommand
+
+Remove URL rewrites you added:
+  git config --global --unset-all url.""git@github-personal:"".insteadOf
+
+Restore previous alt config:
+  Copy-Item -Force C:\AI_Tools\SSH\config.bak-20260203-151617 C:\AI_Tools\SSH\config
+
+Outstanding issues / next steps:
+1) Add the printed public keys to GitHub (personal/work) as SSH keys on the correct accounts.
+2) Decide which alias should be default rewrite (github-personal vs github-work).
+3) If/when you get admin, repair ~/.ssh/config and optionally remove the bypass.
+============================

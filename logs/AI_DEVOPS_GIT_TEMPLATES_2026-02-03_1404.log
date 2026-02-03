@@ -1,0 +1,32 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_TEMPLATES
+End:             02/03/2026 14:04:59
+
+Actions performed:
+Created baseline Git templates under C:\AI_Tools\Git (global ignore, global attributes, commit template, init template dir + hooks).
+Applied global git config (init.defaultBranch, init.templatedir, excludesfile, attributesfile, commit.template, etc.).
+Validated templates via disposable repo init (hooks copied) and commit template presence.
+Post-fix: Repaired global.gitattributes newline/formatting issues, restored *.sh LF rule, and moved *.sh adjacent to *.bash.
+Validated attributes/EOL behavior via git check-attr + git ls-files --eol in disposable repo.
+
+System changes made:
+Updated user-scope Git config: C:\Users\TimmseysTech\.gitconfig
+Created/updated baseline template assets under: C:\AI_Tools\Git\
+Edited: C:\AI_Tools\Git\global.gitattributes (format fix + *.sh rule placement).
+Backups created: global.gitattributes.bak-* in same directory.
+
+Risks introduced:
+Global line-ending behavior enforced via attributes + core.autocrlf=input; legacy repos may show churn if they previously stored CRLF for files now forced to LF (or vice versa).
+
+Rollback notes:
+Restore attributes from backup if needed:
+- Copy-Item -Force C:\AI_Tools\Git\global.gitattributes.bak-YYYYMMDD-HHMMSS C:\AI_Tools\Git\global.gitattributes
+
+Or remove template assets + unset global keys as previously documented.
+
+Outstanding issues / next steps:
+Optional next tasks:
+- DEVOPS_GIT_SIGNING (SSH/GPG signing baseline)
+- DEVOPS_GIT_SSH_MULTIKEY (multi-identity SSH config)
+- DEVOPS_GIT_WORKFLOWS (branching/release patterns)
+============================

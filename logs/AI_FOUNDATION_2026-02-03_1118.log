@@ -1,0 +1,50 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            FOUNDATION
+End:             02/03/2026 11:18:38
+
+Actions performed:
+Built core architecture:
+- Directories: C:\AI_Logs, C:\AI_Tools, C:\AI_Scripts
+- Tools: C:\AI_Tools\AI.Tools.ps1 + loader C:\AI_Tools\AI.ps1
+- Baseline snapshot script: C:\AI_Scripts\AI.Baseline.ps1 (writes AI_BASELINE_*.log)
+- Control wrapper: C:\AI_Scripts\AI.Run.ps1 (clean header log + transcript)
+- Toolkit scripts: AI.Hash.ps1, AI.CopySafe.ps1, AI.DiffText.ps1, AI.Health.ps1
+- Task runner: C:\AI_Scripts\AI.TaskRunner.ps1 (header+transcript+summary automation)
+
+Latest logs:
+
+Task         LatestLog                                      LastWriteTime        
+----         ---------                                      -------------        
+BASEARCH     C:\AI_Logs\AI_BASEARCH_2026-02-03_1108.log     3/02/2026 11:08:53 AM
+BASELINE     C:\AI_Logs\AI_BASELINE_2026-02-03_1111.log     3/02/2026 11:12:03 AM
+CONTROL      C:\AI_Logs\AI_CONTROL_2026-02-03_1114.log      3/02/2026 11:14:00 AM
+TOOLKIT      C:\AI_Logs\AI_TOOLKIT_2026-02-03_1116.log      3/02/2026 11:16:32 AM
+TASKSCAFFOLD C:\AI_Logs\AI_TASKSCAFFOLD_2026-02-03_1117.log 3/02/2026 11:17:46 AM
+
+
+
+
+System changes made:
+Filesystem-only changes under:
+- C:\AI_Logs (logs + transcripts)
+- C:\AI_Tools (helper modules)
+- C:\AI_Scripts (runner + utilities)
+No registry/services/scheduled tasks created.
+
+Risks introduced:
+Transcripts/logs may contain sensitive output. Treat C:\AI_Logs as sensitive.
+ExecutionPolicy was set to Bypass at Process scope during sessions only (non-persistent).
+
+Rollback notes:
+Remove everything:
+Remove-Item C:\AI_Logs,C:\AI_Tools,C:\AI_Scripts -Recurse -Force
+(or delete selectively by task prefix AI_<TASK>_* in C:\AI_Logs)
+
+Outstanding issues / next steps:
+How to start any future task (recommended):
+1) Use runner for enforced logging/transcript:
+   & C:\AI_Scripts\AI.TaskRunner.ps1 -Task '<TASK>' -Objective '<OBJ>' -Constraints '<RULES>' -ScriptBlock { <commands> }
+
+Restore protocol for new chat:
+- Paste the latest FOUNDATION log (AI_FOUNDATION_*.log) and any task-specific logs requested.
+============================

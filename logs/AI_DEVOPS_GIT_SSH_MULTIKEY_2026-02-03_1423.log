@@ -1,0 +1,28 @@
+﻿==== AI SESSION HEADER ====
+Task:        DEVOPS_GIT_SSH_MULTIKEY
+Objective:   Configure clean multi-identity SSH setup for Git: per-host aliases, isolated keys, deterministic Git usage.
+Constraints: PowerShell-only orchestration. No external downloads. User-scope SSH/Git only. Logs authoritative.
+Windows: Windows 10 Home 2009 (Build 26200)
+PowerShell: 5.1.26100.7705
+Git: git version 2.52.0.windows.1
+OpenSSH: 9.5.5.1
+
+Windows:     Windows 10 Home
+WinVersion:  2009
+OS Build:    26200
+PowerShell:  5.1.26100.7705
+Start:       02/03/2026 14:23:41
+
+ExecutionPolicy (all scopes):
+
+        Scope ExecutionPolicy
+        ----- ---------------
+      Process          Bypass
+  CurrentUser       Undefined
+ LocalMachine       Undefined
+   UserPolicy       Undefined
+MachinePolicy       Undefined
+
+
+
+==========================

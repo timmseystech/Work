@@ -1,0 +1,65 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_TEMPLATES
+End:             02/03/2026 13:55:40
+
+Actions performed:
+Created Git template root: C:\AI_Tools\Git
+Created template dir: C:\AI_Tools\Git\templates
+Created hooks dir: C:\AI_Tools\Git\templates\hooks
+Wrote:
+- C:\AI_Tools\Git\global.gitignore
+- C:\AI_Tools\Git\global.gitattributes
+- C:\AI_Tools\Git\commit-template.txt
+Created hook templates:
+- pre-commit
+- pre-push
+Applied global git config:
+- init.defaultBranch=main
+- init.templatedir=C:\AI_Tools\Git\templates
+- core.excludesfile=C:\AI_Tools\Git\global.gitignore
+- core.attributesfile=C:\AI_Tools\Git\global.gitattributes
+- commit.template=C:\AI_Tools\Git\commit-template.txt
+- fetch.prune=true
+- pull.rebase=false
+- rebase.autoStash=true
+- rerere.enabled=true
+- core.autocrlf=input
+- core.safecrlf=warn
+- diff.algorithm=histogram
+Validated:
+- git config --global --list --show-origin
+- spot checks of key values
+
+System changes made:
+Updated user-scope Git config: C:\Users\TimmseysTech\.gitconfig
+Created baseline template assets under: C:\AI_Tools\Git\
+New repos will inherit init.templatedir content.
+
+Risks introduced:
+Line-ending behavior changed globally (core.autocrlf=input + global attributes). Repo-specific overrides may be needed.
+Pull behavior defaults to merge (pull.rebase=false).
+
+Rollback notes:
+Remove files:
+Remove-Item -Recurse -Force C:\AI_Tools\Git
+
+Unset global keys:
+git config --global --unset-all core.excludesfile
+git config --global --unset-all core.attributesfile
+git config --global --unset-all commit.template
+git config --global --unset-all init.templatedir
+git config --global --unset-all core.autocrlf
+git config --global --unset-all core.safecrlf
+git config --global --unset-all fetch.prune
+git config --global --unset-all pull.rebase
+git config --global --unset-all rebase.autoStash
+git config --global --unset-all rerere.enabled
+git config --global --unset-all diff.algorithm
+(Optional) git config --global --unset-all init.defaultBranch
+
+Outstanding issues / next steps:
+Optional next tasks:
+- DEVOPS_GIT_SIGNING (SSH/GPG signing baseline)
+- DEVOPS_GIT_SSH_MULTIKEY (multi-identity SSH config)
+- DEVOPS_GIT_WORKFLOWS (branching/release patterns)
+============================

@@ -1,0 +1,24 @@
+﻿==== AI SESSION HEADER ====
+Task:        DEVOPS
+Objective:   Install and configure core DevOps tooling (PowerShell 7 LTS, Windows Terminal, Git) with minimal friction.
+Constraints: Downloads allowed; PowerShell-only execution; avoid breaking PS 5.1; logs authoritative.
+
+Windows:     Windows 10 Home
+WinVersion:  2009
+OS Build:    26200
+PowerShell:  5.1.26100.7705
+Start:       02/03/2026 11:31:09
+
+ExecutionPolicy (all scopes):
+
+        Scope ExecutionPolicy
+        ----- ---------------
+      Process          Bypass
+  CurrentUser       Undefined
+ LocalMachine       Undefined
+   UserPolicy       Undefined
+MachinePolicy       Undefined
+
+
+
+==========================

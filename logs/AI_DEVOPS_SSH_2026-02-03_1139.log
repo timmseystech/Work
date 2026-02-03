@@ -1,0 +1,24 @@
+﻿==== AI SESSION HEADER ====
+Task:        DEVOPS_SSH
+Objective:   Generate OpenSSH keys, configure SSH client safely, and prepare GitHub-ready setup.
+Constraints: Downloads allowed; PowerShell-only; do not upload keys; logs authoritative.
+
+Windows:     Windows 10 Home
+WinVersion:  2009
+OS Build:    26200
+PowerShell:  5.1.26100.7705
+Start:       02/03/2026 11:39:30
+
+ExecutionPolicy (all scopes):
+
+        Scope ExecutionPolicy
+        ----- ---------------
+      Process          Bypass
+  CurrentUser       Undefined
+ LocalMachine       Undefined
+   UserPolicy       Undefined
+MachinePolicy       Undefined
+
+
+
+==========================

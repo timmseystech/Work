@@ -1,0 +1,32 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_WSL
+End:             02/03/2026 12:41:06
+
+Actions performed:
+Enabled Windows features: WSL and VirtualMachinePlatform.
+Set WSL default version to 2.
+Installed Ubuntu LTS.
+Completed first-run Linux user provisioning.
+Verified Ubuntu running under WSL2.
+
+System changes made:
+System-level Windows features enabled (WSL, VirtualMachinePlatform).
+Ubuntu distribution installed and available under WSL2.
+
+Risks introduced:
+WSL uses virtualization resources when running.
+Linux filesystem consumes disk space.
+
+Rollback notes:
+Remove distro: wsl.exe --unregister Ubuntu
+Disable features (reboot required):
+dism.exe /online /disable-feature /featurename:Microsoft-Windows-Subsystem-Linux /norestart
+dism.exe /online /disable-feature /featurename:VirtualMachinePlatform /norestart
+
+Outstanding issues / next steps:
+Next options:
+- DEVOPS_WSL_TOOLCHAIN (build-essential, Node, Python, Go)
+- DEVOPS_DOCKER (Docker Desktop + WSL integration)
+- DEVOPS_WSL_HARDEN (.wslconfig resource limits)
+- DONE
+============================

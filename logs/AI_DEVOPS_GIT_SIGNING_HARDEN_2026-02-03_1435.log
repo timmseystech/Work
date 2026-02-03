@@ -1,0 +1,46 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_SIGNING_HARDEN
+End:             02/03/2026 14:35:50
+
+Actions performed:
+Backed up SSH config/allowed_signers/signing keys to: C:\Users\TimmseysTech\.ssh\backup-20260203-143545
+Captured SSH ACL snapshot: C:\Users\TimmseysTech\.ssh\backup-20260203-143545\ssh-acls.txt
+Normalized ~/.ssh/config to remove duplicate Host blocks and ensured Host * defaults exist.
+Hardened ACLs on ~/.ssh/config, allowed_signers, and signing keypair (restricted inheritance + limited principals).
+Re-asserted Git SSH signing configuration (gpg.format=ssh, signingkey, allowedSignersFile, commit/tag signing enabled).
+Validated via ssh -T (best-effort) and a disposable signed commit verified with git log --show-signature.
+
+System changes made:
+Edited: C:\Users\TimmseysTech\.ssh\config (dedupe + Host * defaults)
+ACL changes applied to: C:\Users\TimmseysTech\.ssh\config, C:\Users\TimmseysTech\.ssh\allowed_signers, C:\Users\TimmseysTech\.ssh\id_ed25519_git_sign, C:\Users\TimmseysTech\.ssh\id_ed25519_git_sign.pub
+Git global config ensured for SSH signing + signature display.
+Backups created under: C:\Users\TimmseysTech\.ssh\backup-20260203-143545
+
+Risks introduced:
+If ACL lockdown was applied to the wrong key/config file, SSH auth/signing could fail until ACLs are restored.
+Host * defaults may slightly alter SSH behavior (keepalive/agent usage) but are standard safe settings.
+
+Rollback notes:
+Restore files:
+- If needed: Copy-Item -Force C:\Users\TimmseysTech\.ssh\backup-20260203-143545\config.bak C:\Users\TimmseysTech\.ssh\config
+- If needed: Copy-Item -Force C:\Users\TimmseysTech\.ssh\backup-20260203-143545\allowed_signers.bak C:\Users\TimmseysTech\.ssh\allowed_signers
+- If needed: Copy-Item -Force C:\Users\TimmseysTech\.ssh\backup-20260203-143545\id_ed25519_git_sign.bak C:\Users\TimmseysTech\.ssh\id_ed25519_git_sign
+- If needed: Copy-Item -Force C:\Users\TimmseysTech\.ssh\backup-20260203-143545\id_ed25519_git_sign.pub.bak C:\Users\TimmseysTech\.ssh\id_ed25519_git_sign.pub
+
+Restore ACLs (best-effort via saved snapshot reference):
+- Review: C:\Users\TimmseysTech\.ssh\backup-20260203-143545\ssh-acls.txt
+- You can reset inheritance broadly (last resort):
+  icacls "C:\Users\TimmseysTech\.ssh" /inheritance:e /T /C
+
+Unset Git signing keys (if you want to disable signing):
+git config --global --unset-all gpg.format
+git config --global --unset-all user.signingkey
+git config --global --unset-all gpg.ssh.allowedSignersFile
+git config --global --unset-all commit.gpgsign
+git config --global --unset-all tag.gpgsign
+git config --global --unset-all log.showSignature
+
+Outstanding issues / next steps:
+If everything passes, you are DONE for baseline hardening.
+Optional next: rotate SSH auth key(s) per identity, add work host alias, and wire per-repo user.name/user.email via includeIf.
+============================

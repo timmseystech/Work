@@ -1,0 +1,32 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_SSH
+End:             02/03/2026 11:55:06
+
+Actions performed:
+Generated ed25519 keypair: id_ed25519_github
+Enabled and started ssh-agent (StartupType=Manual)
+Loaded key into agent
+Configured ~/.ssh/config for github.com IdentityFile
+GitHub auth SUCCESS: 'Hi timmseystech! ...'
+
+System changes made:
+Created ~/.ssh/id_ed25519_github and .pub
+Updated ~/.ssh/config
+Set ssh-agent service StartupType to Manual and started it
+
+Risks introduced:
+Private key exists locally; protect it.
+Agent holds key in memory while running.
+
+Rollback notes:
+Disable agent: Set-Service ssh-agent -StartupType Disabled; Stop-Service ssh-agent
+Remove keypair: Remove-Item ~/.ssh/id_ed25519_github* -Force
+Restore config from ~/.ssh/config.bak_*
+
+Outstanding issues / next steps:
+Next options:
+- Set git identity (user.name / user.email)
+- Optional: URL rewrite to prefer SSH for GitHub
+- Clone a repo and verify remote
+- Add GitLab/Bitbucket host profiles
+============================

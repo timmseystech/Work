@@ -1,0 +1,25 @@
+﻿==== AI SESSION SUMMARY ====
+Task:            DEVOPS_GIT_BOOTSTRAP_WORK_REPO
+End:             02/03/2026 16:35:02
+
+Actions performed:
+Cloned empty repo and bootstrapped it with README + .gitignore.
+Created first commit on main using work identity and SSH signing settings.
+Pushed main to GitHub and set upstream tracking.
+
+System changes made:
+Created/updated in repo: README.md, .gitignore, folders src/ and docs/.
+New root commit created and pushed to origin/main.
+
+Risks introduced:
+Minimal: repo now has an initial commit and default branch (main).
+
+Rollback notes:
+To remove initial commit (DANGEROUS if others start using it):
+git reset --hard HEAD~1
+git push --force origin main
+
+Outstanding issues / next steps:
+Optional hardening: enable branch protection + require signed commits.
+Optional hygiene: add .gitattributes for line endings; add LICENSE.
+============================
