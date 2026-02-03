@@ -170,3 +170,8 @@ function New-AISaveState {
 . (Join-Path $PSScriptRoot 'llm\offline-runtime.ps1')
 # === /Offline Runtime Loader ===
 
+
+# === Offline Install Plan Loader ===
+. (Join-Path $PSScriptRoot 'llm\offline-install-plan.ps1')
+# === /Offline Install Plan Loader ===
+
