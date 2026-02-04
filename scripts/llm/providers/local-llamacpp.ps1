@@ -21,25 +21,67 @@ function Invoke-LLMProviderLocalLlamaCpp {
   if ($p.defaultArgs) { $args += $p.defaultArgs }
   $args += @('-p', $Prompt)
 
-  $psi = New-Object System.Diagnostics.ProcessStartInfo
-  $psi.FileName = $exe
-  $psi.Arguments = ($args -join ' ')
-  $psi.RedirectStandardOutput = $true
-  $psi.RedirectStandardError  = $true
-  $psi.UseShellExecute = $false
-  $psi.CreateNoWindow  = $true
+  function Join-Win32CmdLine {
+    param([string[]]$Args)
 
-  $proc = New-Object System.Diagnostics.Process
-  $proc.StartInfo = $psi
-  [void]$proc.Start()
+    # Windows CreateProcess command-line quoting rules (similar to Python subprocess list2cmdline)
+    $out = foreach ($a in $Args) {
+      if ($null -eq $a) { '""'; continue }
 
-  $stdout = $proc.StandardOutput.ReadToEnd()
-  $stderr = $proc.StandardError.ReadToEnd()
-  $proc.WaitForExit()
+      $s = [string]$a
+      if ($s -notmatch '[\s"]') { $s; continue }
 
-  if ($proc.ExitCode -ne 0) {
-    throw ("llama.cpp failed (exit {0}): {1}" -f $proc.ExitCode, $stderr)
+      $sb = New-Object System.Text.StringBuilder
+      [void]$sb.Append('"')
+
+      $bs = 0
+      foreach ($ch in $s.ToCharArray()) {
+        if ($ch -eq '\') {
+          $bs++
+          continue
+        }
+        if ($ch -eq '"') {
+          # escape backslashes + quote
+          [void]$sb.Append('\'.PadLeft($bs * 2 + 1, '\'))
+          [void]$sb.Append('"')
+          $bs = 0
+          continue
+        }
+        if ($bs -gt 0) { [void]$sb.Append('\'.PadLeft($bs, '\')); $bs = 0 }
+        [void]$sb.Append($ch)
+      }
+      if ($bs -gt 0) { [void]$sb.Append('\'.PadLeft($bs * 2, '\')) }
+
+      [void]$sb.Append('"')
+      $sb.ToString()
+    }
+
+    return ($out -join ' ')
   }
 
-  return $stdout.Trim()
+  $stdoutFile = Join-Path $env:TEMP ("llama_stdout_{0}.txt" -f ([guid]::NewGuid().ToString('N')))
+  $stderrFile = Join-Path $env:TEMP ("llama_stderr_{0}.txt" -f ([guid]::NewGuid().ToString('N')))
+
+  try {
+    # IMPORTANT: pass a SINGLE properly-quoted command line string
+    $argLine = Join-Win32CmdLine -Args $args
+
+    $proc = Start-Process -FilePath $exe -ArgumentList $argLine -NoNewWindow -Wait -PassThru `
+      -RedirectStandardOutput $stdoutFile -RedirectStandardError $stderrFile
+
+    $stdout = Get-Content -Raw -Path $stdoutFile -ErrorAction SilentlyContinue
+    $stderr = Get-Content -Raw -Path $stderrFile -ErrorAction SilentlyContinue
+
+    if ($proc.ExitCode -ne 0) {
+      throw ("llama.cpp failed (exit {0}): {1}" -f $proc.ExitCode, ($stderr.Trim()))
+    }
+
+    return ($stdout.Trim())
+  }
+  finally {
+    Remove-Item -Force -ErrorAction SilentlyContinue $stdoutFile, $stderrFile | Out-Null
+  }
 }
+
+
+
