@@ -13,77 +13,65 @@ function Invoke-LLMProviderLocalLlamaCpp {
   $exe   = [string]$p.exePath
   $model = [string]$p.modelPath
 
-  if (-not (Test-Path $exe))   { throw "llama.cpp exe not found: $exe (offline runtime not installed yet)" }
-  if (-not (Test-Path $model)) { throw "model file not found: $model (GGUF not present yet)" }
+  if (-not (Test-Path $exe))   { throw "llama.cpp exe not found: $exe" }
+  if (-not (Test-Path $model)) { throw "model file not found: $model" }
 
-  # IMPORTANT: do NOT use $args (automatic variable). Use an explicit list and emit a real string[].
-  $cliArgsList = New-Object System.Collections.Generic.List[string]
-  $cliArgsList.Add('-m')
-  $cliArgsList.Add($model)
-
+  # Build arg array (no string joining, no quoting games)
+  $argList = @('-m', $model)
   if ($null -ne $p.defaultArgs) {
     foreach ($a in @($p.defaultArgs)) {
       if ($null -eq $a) { continue }
-      $cliArgsList.Add([string]$a)
+      $argList += [string]$a
     }
   }
 
-  $useSimpleIo = $cliArgsList.Contains('--simple-io')
+  # If NOT simple-io, pass prompt via -p; otherwise pipe prompt to stdin.
+  $useSimpleIo = ($argList -contains '--simple-io')
 
-  if (-not $useSimpleIo) {
-    $cliArgsList.Add('-p')
-    $cliArgsList.Add($Prompt)
-  }
-
-  $cliArgs = $cliArgsList.ToArray()
-
-  # Files for robust IO capture (works on Windows PowerShell 5.1)
   $stdoutFile = Join-Path $env:TEMP ("llama_stdout_{0}.txt" -f ([guid]::NewGuid().ToString('N')))
   $stderrFile = Join-Path $env:TEMP ("llama_stderr_{0}.txt" -f ([guid]::NewGuid().ToString('N')))
-  $inFile     = Join-Path $env:TEMP ("llama_in_{0}.txt"     -f ([guid]::NewGuid().ToString('N')))
 
   try {
-    if ($useSimpleIo) {
-      # llama-cli --simple-io reads from STDIN
-      ($Prompt + "`r`n") | Set-Content -Encoding utf8 -Path $inFile
+    $prevEap = $ErrorActionPreference
+    try {
+      # Prevent NativeCommandError records from killing the run
+      $ErrorActionPreference = 'Continue'
 
-      $proc = Start-Process -FilePath $exe -ArgumentList $cliArgs -Wait -PassThru -NoNewWindow `
-        -RedirectStandardInput  $inFile `
-        -RedirectStandardOutput $stdoutFile `
-        -RedirectStandardError  $stderrFile
+      if ($useSimpleIo) {
+        # Force newline + /exit to guarantee termination after first response
+        $in = ($Prompt.TrimEnd() + "`r`n/exit`r`n")
+        $in | & $exe @argList 1> $stdoutFile 2> $stderrFile
+      } else {
+        & $exe @argList -p $Prompt 1> $stdoutFile 2> $stderrFile
+      }
+
+      $code = $LASTEXITCODE
     }
-    else {
-      $proc = Start-Process -FilePath $exe -ArgumentList $cliArgs -Wait -PassThru -NoNewWindow `
-        -RedirectStandardOutput $stdoutFile `
-        -RedirectStandardError  $stderrFile
-    }
+    finally { $ErrorActionPreference = $prevEap }
 
     $stdout = Get-Content -Raw -ErrorAction SilentlyContinue -Path $stdoutFile
     $stderr = Get-Content -Raw -ErrorAction SilentlyContinue -Path $stderrFile
-
     if ($null -eq $stdout) { $stdout = '' }
     if ($null -eq $stderr) { $stderr = '' }
 
-    if ($proc.ExitCode -ne 0) {
-      throw ("llama.cpp failed (exit {0}): {1}" -f $proc.ExitCode, ($stderr + "`n" + $stdout).Trim())
+    if ($code -ne 0) {
+      throw ("llama.cpp failed (exit {0}): {1}" -f $code, ($stderr + "`n" + $stdout).Trim())
     }
 
-    # If simple-io, strip banner-ish lines and return last meaningful line
-    if ($useSimpleIo) {
-      $skip = '^(load_backend:|Loading model\.\.\.|build\s*:|model\s*:|modalities\s*:|available commands:|/exit|/regen|/clear|/read|\[ Prompt:|llama_memory_|Exiting\.\.\.|>$)'
-      $clean = @()
-      foreach ($line in ($stdout -split "`r?`n")) {
-        $t = $line.Trim()
-        if (-not $t) { continue }
-        if ($t -match $skip) { continue }
-        $clean += $t
-      }
-      if ($clean.Count -gt 0) { return $clean[-1] }
+    # Clean output: return last meaningful non-banner line
+    $skip = '^(load_backend:|Loading model\.\.\.|build\s*:|model\s*:|modalities\s*:|available commands:|/exit|/regen|/clear|/read|\[ Prompt:|llama_memory_|Exiting\.\.\.|>$)'
+    $clean = @()
+    foreach ($line in ($stdout -split "`r?`n")) {
+      $t = $line.Trim()
+      if (-not $t) { continue }
+      if ($t -match $skip) { continue }
+      $clean += $t
     }
 
+    if ($clean.Count -gt 0) { return $clean[-1] }
     return $stdout.Trim()
   }
   finally {
-    Remove-Item -Force -ErrorAction SilentlyContinue $stdoutFile, $stderrFile, $inFile | Out-Null
+    Remove-Item -Force -ErrorAction SilentlyContinue $stdoutFile, $stderrFile | Out-Null
   }
 }
