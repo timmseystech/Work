@@ -123,3 +123,68 @@ function Set-LLMModelPath {
 
 
 
+
+
+# === Enable-LLMOffline ===
+function Enable-LLMOffline {
+  [CmdletBinding(SupportsShouldProcess)]
+  param(
+    [switch]$AutoSelectNewestModel,
+    [string]$SelfTestPrompt = 'Say LLM OK and nothing else.',
+    [string]$LogDir = 'C:\AI_Logs'
+  )
+
+  $layout = Get-LLMOfflineLayout
+  New-Item -ItemType Directory -Force -Path $layout.ToolsDir  | Out-Null
+  New-Item -ItemType Directory -Force -Path $layout.ModelsDir | Out-Null
+  New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
+
+  $layoutCheck = Test-LLMOfflineLayout
+  $runtimePlan = Test-LLMOfflineRuntimePlan
+  $setupCheck  = Test-LLMSetup -Provider 'local-llamacpp'
+
+  $ts = Get-Date -Format 'yyyy-MM-dd_HHmmss'
+  $logPath = Join-Path $LogDir "AI_LLM_OFFLINE_ENABLE_${ts}.log"
+
+  @"
+LAYOUT:
+$(($layoutCheck | Format-List | Out-String).Trim())
+
+RUNTIME_PLAN:
+$(($runtimePlan | Format-List | Out-String).Trim())
+
+SETUP_CHECK:
+$(($setupCheck | Format-List | Out-String).Trim())
+"@ | Set-Content -Encoding utf8 $logPath
+
+  if (-not $layoutCheck.Ok_Exe) {
+    Add-Content -Encoding utf8 $logPath "ERROR: Missing llama.cpp exe in $($layout.ToolsDir) (llama-cli.exe or main.exe)."
+    return [pscustomobject]@{ Ok=$false; Stage='exe-missing'; Log=$logPath }
+  }
+
+  if ($AutoSelectNewestModel -and $layoutCheck.ModelNewest) {
+    if ($PSCmdlet.ShouldProcess('config\llm.json', "Set modelPath to newest GGUF: $($layoutCheck.ModelNewest)")) {
+      Set-LLMModelPath -NameOrPath $layoutCheck.ModelNewest | Out-Null
+    }
+  }
+
+  # Refresh after potential model selection
+  $setupCheck = Test-LLMSetup -Provider 'local-llamacpp'
+  if (-not $setupCheck.Ok) {
+    Add-Content -Encoding utf8 $logPath ("ERROR: Setup not OK: " + ($setupCheck.Issues -join '; '))
+    return [pscustomobject]@{ Ok=$false; Stage='model-missing-or-config'; Log=$logPath; Issues=$setupCheck.Issues }
+  }
+
+  # Optional self-test (local inference only)
+  try {
+    $out = Invoke-LLMChat -Prompt $SelfTestPrompt -Provider 'local-llamacpp' -NoHistory
+    Add-Content -Encoding utf8 $logPath "SELF_TEST_OUTPUT:`n$out"
+    return [pscustomobject]@{ Ok=$true; Stage='ready'; Log=$logPath; Output=$out }
+  }
+  catch {
+    Add-Content -Encoding utf8 $logPath ("ERROR: Self-test failed: " + $_.Exception.Message)
+    return [pscustomobject]@{ Ok=$false; Stage='self-test-failed'; Log=$logPath; Error=$_.Exception.Message }
+  }
+}
+# === /Enable-LLMOffline ===
+
