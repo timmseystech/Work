@@ -142,5 +142,13 @@
         "commit":  "0f1eff9a3816dca95765a0b133efbacdba8d589a",
         "branch":  "main",
         "timestamp":  "2026-02-04T14:17:51.0193316+10:00"
+    },
+    {
+        "name":  "offline-llm-provider-quoting-fix-v1",
+        "slug":  "offline-llm-provider-quoting-fix-v1",
+        "log":  "AI_STATE_offline-llm-provider-quoting-fix-v1_2026-02-04_1528.log",
+        "commit":  "19b29cc2b6c9f2b39b3cfdd1c16be9ec8879cf29",
+        "branch":  "main",
+        "timestamp":  "2026-02-04T15:28:07.1507097+10:00"
     }
 ]

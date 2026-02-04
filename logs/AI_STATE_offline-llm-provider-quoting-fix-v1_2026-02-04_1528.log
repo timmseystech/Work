@@ -1,0 +1,11 @@
+﻿Name: offline-llm-provider-quoting-fix-v1
+Objective: Fix local-llamacpp provider so prompts with spaces are quoted correctly on Windows
+Notes: Added Win32 command-line quoting; Start-Process now receives a single quoted arg string; fixes invalid argument errors.
+Timestamp: 2026-02-04T15:28:07.1507097+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 19b29cc2b6c9f2b39b3cfdd1c16be9ec8879cf29
+GitStatus: ## main...origin/main
