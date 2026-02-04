@@ -11,9 +11,11 @@
                                              "modelPath":  "C:\\models\\llm\\model.gguf",
                                              "defaultArgs":  [
                                                                  "-c",
-                                                                 "4096",
+                                                                 "2048",
                                                                  "-t",
-                                                                 "8"
+                                                                 "6",
+                                                                 "--chat-template",
+                                                                 "qwen"
                                                              ]
                                          }
                   },
