@@ -1,0 +1,13 @@
+﻿Name: offline-llm-terminal-operational-v1
+Objective: Standalone offline LLM terminal fully operational with llama.cpp + Qwen2.5 7B
+Notes: llama-cli verified, DLLs present, GGUF loads, Invoke-LLMTerminal interactive chat working.
+Timestamp: 2026-02-04T14:17:51.0193316+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 0f1eff9a3816dca95765a0b133efbacdba8d589a
+GitStatus: ## main...origin/main
+ M config/llm.json
+ M scripts/llm/offline-install-plan.ps1
