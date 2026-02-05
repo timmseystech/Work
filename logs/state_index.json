@@ -174,5 +174,13 @@
         "commit":  "5a724c9e2f05fba002e23cdf7ce6e493e1015fb2",
         "branch":  "main",
         "timestamp":  "2026-02-05T22:02:56.5755353+10:00"
+    },
+    {
+        "name":  "operating-directive-llm-hardened-v1",
+        "slug":  "operating-directive-llm-hardened-v1",
+        "log":  "AI_STATE_operating-directive-llm-hardened-v1_2026-02-05_2222.log",
+        "commit":  "05d797404dc3525e85e49fb6bac4a556583947ec",
+        "branch":  "main",
+        "timestamp":  "2026-02-05T22:22:13.7220951+10:00"
     }
 ]
