@@ -150,5 +150,13 @@
         "commit":  "19b29cc2b6c9f2b39b3cfdd1c16be9ec8879cf29",
         "branch":  "main",
         "timestamp":  "2026-02-04T15:28:07.1507097+10:00"
+    },
+    {
+        "name":  "llm/llamacpp-direct-pipeline-fix",
+        "slug":  "llm-llamacpp-direct-pipeline-fix",
+        "log":  "AI_STATE_llm-llamacpp-direct-pipeline-fix_2026-02-05_1427.log",
+        "commit":  "3c9348be900d4277c6a4796135cb8be09dcecf41",
+        "branch":  "main",
+        "timestamp":  "2026-02-05T14:27:01.4918367+10:00"
     }
 ]

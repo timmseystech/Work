@@ -1,0 +1,11 @@
+﻿Name: llm/llamacpp-direct-pipeline-fix
+Objective: Fix local-llamacpp provider: deterministic -m <model> arg passing by calling llama-cli via pipeline with stderr redirection; terminate simple-io via /exit; parse last meaningful line.
+Notes: Repo clean at HEAD=3c9348b. Baseline: Invoke-LLMChat -Provider local-llamacpp => 'LLM OK'.
+Timestamp: 2026-02-05T14:27:01.4918367+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 3c9348be900d4277c6a4796135cb8be09dcecf41
+GitStatus: ## main...origin/main
