@@ -1,0 +1,11 @@
+﻿Name: base-model-v1
+Objective: OFFICIAL BASE MODEL V1 (stable): local-llamacpp uses --simple-io mode; baseline Invoke-LLMChat returns 'LLM OK'. Never use --chat-template qwen with --simple-io.
+Notes: Hard recovery: git reset --hard ai-state/base-model-v1. Off-repo backup: C:\AI_Logs\BASE_MODEL_V1\
+Timestamp: 2026-02-05T22:02:56.5755353+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 5a724c9e2f05fba002e23cdf7ce6e493e1015fb2
+GitStatus: ## main...origin/main
