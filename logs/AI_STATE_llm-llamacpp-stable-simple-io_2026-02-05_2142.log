@@ -1,0 +1,11 @@
+﻿Name: llm/llamacpp-stable-simple-io
+Objective: Restore deterministic llama-cli stdin mode by enforcing --simple-io in config; baseline Invoke-LLMChat returns 'LLM OK'.
+Notes: This prevents interactive hangs under --chat-template qwen.
+Timestamp: 2026-02-05T21:42:26.2285061+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: db451377f3ec2f06128fe28b803709fa9c53dbdc
+GitStatus: ## main...origin/main
