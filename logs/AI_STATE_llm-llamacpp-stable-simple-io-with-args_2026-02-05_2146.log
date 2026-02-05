@@ -1,0 +1,11 @@
+﻿Name: llm/llamacpp-stable-simple-io-with-args
+Objective: Keep deterministic stdin mode AND restore prior defaultArgs (-c/-t/--chat-template) to prevent config drift.
+Notes: If defaultArgs ever collapses again, rollback to this tag.
+Timestamp: 2026-02-05T21:46:08.9875350+10:00
+User: TimmseysTech
+Computer: DESKTOP-PRKLOHC
+Windows: @{WindowsProductName=Windows 10 Home; WindowsVersion=2009; OsBuildNumber=26200}
+PowerShell: 5.1.26100.7705
+GitBranch: main
+GitCommit: 3bca7740bfc5036175aa7a8c94ca043dcdd14d75
+GitStatus: ## main...origin/main
