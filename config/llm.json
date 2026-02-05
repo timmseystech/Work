@@ -10,6 +10,12 @@
                                              "exePath":  "C:\\tools\\llama.cpp\\llama-cli.exe",
                                              "modelPath":  "C:\\models\\llm\\model.gguf",
                                              "defaultArgs":  [
+                                                                 "-c",
+                                                                 "2048",
+                                                                 "-t",
+                                                                 "6",
+                                                                 "--chat-template",
+                                                                 "qwen",
                                                                  "--simple-io"
                                                              ]
                                          }
