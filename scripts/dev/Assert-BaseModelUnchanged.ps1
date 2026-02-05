@@ -14,9 +14,17 @@ $protected = @(
 
 Push-Location $RepoRoot
 try {
-  # Changed tracked files (unstaged + staged)
-  $changed = @(git diff --name-only 2>$null) | Where-Object { $_ }
-  $staged  = @(git diff --cached --name-only 2>$null) | Where-Object { $_ }
+  # PS 5.1: native stderr => NativeCommandError when EAP=Stop
+  # So: temporarily relax EAP around git calls only.
+  $prev = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $changed = @(git diff --name-only 2>$null)     | Where-Object { $_ }
+    $staged  = @(git diff --cached --name-only 2>$null) | Where-Object { $_ }
+  }
+  finally {
+    $ErrorActionPreference = $prev
+  }
 
   $all = @($changed + $staged) | Select-Object -Unique
 
